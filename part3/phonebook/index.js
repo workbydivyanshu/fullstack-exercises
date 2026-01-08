@@ -1,8 +1,11 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const app = express()
 
-// Middleware to parse JSON bodies
+// Middleware
+app.use(cors())
+app.use(express.static('dist'))
 app.use(express.json())
 
 // Exercise 3.8: Create custom morgan token for request body
@@ -115,6 +118,26 @@ app.post('/api/persons', (request, response) => {
   response.json(person)
 })
 
+// PUT /api/persons/:id - update a person's number
+app.put('/api/persons/:id', (request, response) => {
+  const id = request.params.id
+  const body = request.body
+
+  const person = persons.find(p => p.id === id)
+  
+  if (!person) {
+    return response.status(404).json({ error: 'person not found' })
+  }
+
+  const updatedPerson = {
+    ...person,
+    number: body.number
+  }
+
+  persons = persons.map(p => p.id === id ? updatedPerson : p)
+  response.json(updatedPerson)
+})
+
 // Handle unknown endpoints
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
@@ -122,7 +145,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
