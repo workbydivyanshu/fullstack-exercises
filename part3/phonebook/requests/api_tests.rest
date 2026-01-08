@@ -1,0 +1,48 @@
+### Get all persons
+GET http://localhost:3001/api/persons
+
+### Get info
+GET http://localhost:3001/info
+
+### Get single person
+GET http://localhost:3001/api/persons/1
+
+### Get non-existent person (should return 404)
+GET http://localhost:3001/api/persons/999
+
+### Create new person
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Test Person",
+  "number": "123-456789"
+}
+
+### Create person without name (should return 400)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "number": "123-456789"
+}
+
+### Create person without number (should return 400)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Another Person"
+}
+
+### Create duplicate person (should return 400)
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Arto Hellas",
+  "number": "111-222333"
+}
+
+### Delete person
+DELETE http://localhost:3001/api/persons/2
