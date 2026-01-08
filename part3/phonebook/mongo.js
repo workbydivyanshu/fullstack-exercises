@@ -29,9 +29,9 @@ const Person = mongoose.model('Person', personSchema)
 
 // If only password is given, list all entries
 if (process.argv.length === 3) {
-  Person.find({}).then(result => {
+  Person.find({}).then(persons => {
     console.log('phonebook:')
-    result.forEach(person => {
+    persons.forEach(person => {
       console.log(person.name, person.number)
     })
     mongoose.connection.close()
@@ -46,7 +46,7 @@ if (process.argv.length === 3) {
     number: number,
   })
 
-  person.save().then(result => {
+  person.save().then(() => {
     console.log(`added ${name} number ${number} to phonebook`)
     mongoose.connection.close()
   })
