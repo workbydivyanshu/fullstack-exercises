@@ -6,7 +6,10 @@ const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
 
-mongoose.connect(url, { family: 4 })
+mongoose.connect(url, { 
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+})
   .then(result => {
     console.log('connected to MongoDB')
   })

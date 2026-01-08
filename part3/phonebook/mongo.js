@@ -7,12 +7,18 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-// IMPORTANT: Replace 'YOUR_CLUSTER' with your actual MongoDB Atlas cluster address
-const url = `mongodb+srv://fullstack:${password}@cluster0.mongodb.net/phonebookApp?retryWrites=true&w=majority`
+const url = `mongodb+srv://divyanshuganeshwani_db_user:${password}@course.68ohiz6.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=course`
+
+console.log('Connecting to MongoDB...')
 
 mongoose.set('strictQuery', false)
 
-mongoose.connect(url, { family: 4 })
+mongoose.connect(url, { serverSelectionTimeoutMS: 30000 })
+  .then(() => console.log('Connected!'))
+  .catch(err => {
+    console.log('Connection error:', err.message)
+    process.exit(1)
+  })
 
 const personSchema = new mongoose.Schema({
   name: String,
