@@ -1,44 +1,42 @@
-import { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Blog = ({ blog, updateBlog, removeBlog, user }) => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
     borderWidth: 1,
-    marginBottom: 5
-  }
+    marginBottom: 5,
+  };
 
   const toggleVisibility = () => {
-    setVisible(!visible)
-  }
+    setVisible(!visible);
+  };
 
   const increaseLikes = () => {
     updateBlog({
       ...blog,
       likes: blog.likes + 1,
-      user: blog.user.id
-    })
-  }
+      user: blog.user.id,
+    });
+  };
 
   const deleteBlog = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      removeBlog(blog.id)
+      removeBlog(blog.id);
     }
-  }
+  };
 
-  const showDelete = user && blog.user && user.username === blog.user.username
+  const showDelete = user && blog.user && user.username === blog.user.username;
 
   return (
     <div style={blogStyle} className="blog">
       <div>
         {blog.title} {blog.author}
-        <button onClick={toggleVisibility}>
-          {visible ? 'hide' : 'view'}
-        </button>
+        <button onClick={toggleVisibility}>{visible ? 'hide' : 'view'}</button>
       </div>
       {visible && (
         <div className="blogDetails">
@@ -56,14 +54,14 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   updateBlog: PropTypes.func.isRequired,
   removeBlog: PropTypes.func.isRequired,
-  user: PropTypes.object
-}
+  user: PropTypes.object,
+};
 
-export default Blog
+export default Blog;
